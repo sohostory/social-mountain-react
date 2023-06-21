@@ -15,21 +15,29 @@ const Auth = () => {
     e.preventDefault();
 
     console.log("submitHandler called");
-    const LOGIN_URL = "https://socialmtn.devmountain.com";
 
     const body = {
       username,
       password,
     };
 
+    const LOGIN_URL = "https://socialmtn.devmountain.com";
+
+    console.log("body", body);
+
     axios
-      .post(register ? `${LOGIN_URL}/register` : `${LOGIN_URL}/login`, body)
+      .post(
+        register
+          ? `https://socialmtn.devmountain.com/register`
+          : `https://socialmtn.devmountain.com/login`,
+        body
+      )
       .then((res) => {
         console.log(res.data);
-        authCtx.login(res.data.token, res.data.exp, res.data.userId);
+        // authCtx.login(res.data.token, res.data.exp, res.data.userId);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("this is an error", err);
         setUsername("");
         setPassword("");
       });

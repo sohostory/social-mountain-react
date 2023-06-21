@@ -19,12 +19,14 @@ const calculateRemainingTime = (exp) => {
 const getLocalData = () => {
   const storedToken = localStorage.getItem("token");
   const storedExp = localStorage.getItem("exp");
+  const storeId = localStorage.getItem("userId");
 
   const remainingTime = calculateRemainingTime(storedExp);
 
   if (remainingTime <= 1000 * 60 * 30) {
     localStorage.removeItem("token");
     localStorage.removeItem("exp");
+    localStorage.removeItem("userId");
     return null;
   }
 
@@ -45,7 +47,17 @@ export const AuthContextProvider = (props) => {
   const [token, setToken] = useState(initialToken);
   const [userId, setUserId] = useState(null);
 
-  const logout = () => {};
+  const logout = () => {
+    setToken(null);
+    setUserId(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("exp");
+    localStorage.removeItem("userId");
+
+    if (logoutTimer) {
+      clearTimeout(logoutTimer);
+    }
+  };
 
   const login = (token, userId, exp) => {
     setToken(token);
