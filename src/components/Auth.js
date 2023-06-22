@@ -8,11 +8,15 @@ const Auth = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [register, setRegister] = useState(true);
+  const [message, setMessage] = useState("");
+  const [display, setDisplay] = useState("none");
 
   const authCtx = useContext(AuthContext);
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    setDisplay("none");
 
     console.log("submitHandler called");
 
@@ -33,6 +37,8 @@ const Auth = () => {
       })
       .catch((err) => {
         console.log("this is an error", err);
+        setMessage(err.response.data);
+        setDisplay("block");
         setUsername("");
         setPassword("");
       });
@@ -58,6 +64,9 @@ const Auth = () => {
         />
         <button className="form-btn">{register ? "Sign Up" : "Login"}</button>
       </form>
+      <p style={{ display: display }} className="auth-msg">
+        {message}
+      </p>
       <button className="form-btn" onClick={() => setRegister(!register)}>
         Need to {register ? "Login" : "Sign Up"}?
       </button>
