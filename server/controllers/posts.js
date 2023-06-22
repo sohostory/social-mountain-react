@@ -53,8 +53,22 @@ module.exports = {
       res.sendStatus(400);
     }
   },
-  editPost: (req, res) => {
-    console.log("editPost");
+  editPost: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
+
+      await Post.update(
+        { privateStatus: status },
+        {
+          where: { id: +id },
+        }
+      );
+      res.sendStatus(200);
+    } catch (error) {
+      console.log("error in edit post", error);
+      res.sendStatus(400);
+    }
   },
   deletePost: (req, res) => {
     console.log("deletePost");
