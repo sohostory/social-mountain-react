@@ -70,7 +70,15 @@ module.exports = {
       res.sendStatus(400);
     }
   },
-  deletePost: (req, res) => {
-    console.log("deletePost");
+  deletePost: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      await Post.destroy({ where: { id: +id } });
+      res.sendStatus(200);
+    } catch (error) {
+      console.log("error in delete post", error);
+      res.sendStatus(400);
+    }
   },
 };
