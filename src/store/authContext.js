@@ -40,8 +40,11 @@ export const AuthContextProvider = (props) => {
   const localData = getLocalData();
 
   let initialToken;
+  let initialId;
+
   if (localData) {
     initialToken = localData.token;
+    initialId = localData.userId;
   }
 
   const [token, setToken] = useState(initialToken);
@@ -59,11 +62,12 @@ export const AuthContextProvider = (props) => {
     }
   };
 
-  const login = (token, userId, exp) => {
+  const login = (token, exp, userId) => {
     setToken(token);
     setUserId(userId);
     localStorage.setItem("token", token);
     localStorage.setItem("exp", exp);
+    localStorage.setItem("userId", userId);
 
     const remainingTime = calculateRemainingTime(exp);
 

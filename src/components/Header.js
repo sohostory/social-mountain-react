@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 
 import AuthContext from "../store/authContext";
 import logo from "../assets/dm-logo-white.svg";
-import Auth from "./Auth";
 
 const Header = () => {
   const authCtx = useContext(AuthContext);

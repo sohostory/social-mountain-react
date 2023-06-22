@@ -29,7 +29,7 @@ const Auth = () => {
       .post(register ? `${LOGIN_URL}/register` : `${LOGIN_URL}/login`, body)
       .then((res) => {
         console.log(res.data);
-        // authCtx.login(res.data.token, res.data.exp, res.data.userId);
+        authCtx.login(res.data.token, res.data.exp, res.data.userId);
       })
       .catch((err) => {
         console.log("this is an error", err);
