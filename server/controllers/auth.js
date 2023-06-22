@@ -41,12 +41,44 @@ module.exports = {
           exp,
         });
       }
-    } catch (err) {
-      console.log("error in register", err);
+    } catch (error) {
+      console.log("error in register", error);
       res.sendStatus(400);
     }
   },
-  login: (req, res) => {
-    console.log("login");
+  login: async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      let foundUser = await User.findOne({ where: { username } });
+
+      if (foundUser) {
+        const isAuthenticated = bcrypt.compareSync(
+          password,
+          foundUser.hashedPass
+        );
+
+        if (isAuthenticated) {
+          const token = createToken(
+            newUser.dataValues.username,
+            newUser.dataValues.id
+          );
+          const exp = Date.now() + 1000 * 60 * 60 * 48;
+
+          res.status(200).send({
+            username: newUser.dataValues.username,
+            userId: newUser.dataValues.id,
+            token,
+            exp,
+          });
+        } else {
+          res.status(400).send("cannot login user");
+        }
+      } else {
+        res.status(400).send("cannot login user");
+      }
+    } catch (error) {
+      console.log("error in login", error);
+      res.sendStatus(400);
+    }
   },
 };
