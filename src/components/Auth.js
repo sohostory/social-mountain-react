@@ -21,17 +21,12 @@ const Auth = () => {
       password,
     };
 
-    const LOGIN_URL = "https://socialmtn.devmountain.com";
+    const LOGIN_URL = "http://localhost:4000";
 
     console.log("body", body);
 
     axios
-      .post(
-        register
-          ? `https://socialmtn.devmountain.com/register`
-          : `https://socialmtn.devmountain.com/login`,
-        body
-      )
+      .post(register ? `${LOGIN_URL}/register` : `${LOGIN_URL}/login`, body)
       .then((res) => {
         console.log(res.data);
         // authCtx.login(res.data.token, res.data.exp, res.data.userId);
